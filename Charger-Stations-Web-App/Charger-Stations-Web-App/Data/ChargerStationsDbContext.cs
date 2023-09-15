@@ -14,7 +14,7 @@
 
         public DbSet<Charger> Chargers { get; init; }
 
-        public DbSet<Category> Categories { get; init; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -20,7 +20,7 @@
         public const int passwordLoginMinLength = 5;
         public const int passwordLoginMaxLength = 20;
 
-        public const int UsernameMinLength = 5;
+        public const int UsernameMinLength = 3;
         public const int UsernameMaxLength = 30;
     }
 }

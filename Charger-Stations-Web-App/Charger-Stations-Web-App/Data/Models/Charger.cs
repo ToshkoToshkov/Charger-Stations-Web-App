@@ -5,6 +5,7 @@
 
     public class Charger
     {
+        [Required]
         public int Id { get; init; }
 
         [Required]
@@ -19,14 +20,14 @@
         public string ImageURL { get; set; }
 
         [Range(ChargerPriceMinValue, ChargerPriceMaxValue)]
-        public decimal PricePerHour { get; set; }
+        public decimal? PricePerHour { get; set; }
 
-        public string Owner { get; init; }
+        public string? Owner { get; set; }
 
-        public int CategoryId { get; set; }
+        public string? LocationUrl { get; set; }
 
-        public Category Category { get; init; }
+        public int? CategoryId { get; set; }
 
-        public string LocationUrl { get; set; }
+        public Category? Category { get; init; }
     }
 }

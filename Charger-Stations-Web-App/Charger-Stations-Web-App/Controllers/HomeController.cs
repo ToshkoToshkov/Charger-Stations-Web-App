@@ -1,27 +1,13 @@
-﻿using Charger_Stations_Web_App.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
-namespace Charger_Stations_Web_App.Controllers
+﻿namespace Charger_Stations_Web_App.Controllers
 {
+    using Charger_Stations_Web_App.Models;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
+
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        public IActionResult Index() => View(Index);
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

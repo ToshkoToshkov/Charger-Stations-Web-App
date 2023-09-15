@@ -5,12 +5,13 @@
 
     public class Category
     {
+        [Required]
         public int Id { get; set; }
 
         [Required]
         [MaxLength(CategoryNameMaxLength)]
         public string Name { get; set; }
 
-        public IEnumerable<Charger> Chargers { get; set; } = new List<Charger>();
+        public IEnumerable<Charger>? Chargers { get; init; } = new List<Charger>();
     }
 }
