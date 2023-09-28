@@ -18,6 +18,51 @@
             Categories = this.GetCategories()
         });
 
+        public IActionResult All(string category, string searchTerm)
+        {
+            var chargersQuery = this.data.Chargers.AsQueryable();
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                chargersQuery = chargersQuery.Where(c => c.Category.Name == category);
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                chargersQuery = chargersQuery.Where(c =>
+                    c.Model.ToLower().Contains(searchTerm.ToLower()) ||
+                    c.Description.ToLower().Contains(searchTerm.ToLower()) ||
+                    c.Category.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            var chargers = chargersQuery
+                .OrderByDescending(c => c.Id)
+                .Select(c => new ChargerListingViewModel
+                {
+                    Id = c.Id,
+                    Model = c.Model,
+                    ImageURL = c.ImageURL,
+                    PricePerHour = c.PricePerHour,
+                    Owner = c.Owner,
+                    LocationUrl = c.LocationUrl,
+                    Category = c.Category.Name
+                })
+                .ToList();
+
+            var chargerCategories = this.data
+                .Chargers
+                .Select(c => c.Category.Name)
+                .Distinct()
+                .ToList();
+
+            return View(new AllChargersQueryModel
+            {
+                Categories = chargerCategories,
+                Chargers = chargers,
+                SearchTerm = searchTerm
+            });
+        }
+
         [HttpPost]
         public IActionResult Add(AddChargerFormModel charger)
         {
@@ -47,7 +92,7 @@
             this.data.Chargers.Add(chargerData);
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
         }
 
         private IEnumerable<ChargerCategoryViewModel> GetCategories()
