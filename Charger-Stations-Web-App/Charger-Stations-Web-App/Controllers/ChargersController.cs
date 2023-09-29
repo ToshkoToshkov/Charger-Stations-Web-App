@@ -12,31 +12,34 @@
         public ChargersController(ChargerStationsDbContext data)
             => this.data = data;
 
-        [HttpGet]
-        public IActionResult Add() => View(new AddChargerFormModel
-        {
-            Categories = this.GetCategories()
-        });
-
-        public IActionResult All(string category, string searchTerm)
+        public IActionResult All([FromQuery]AllChargersQueryModel query)
         {
             var chargersQuery = this.data.Chargers.AsQueryable();
 
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(query.Category))
             {
-                chargersQuery = chargersQuery.Where(c => c.Category.Name == category);
+                chargersQuery = chargersQuery.Where(c => c.Category.Name == query.Category);
             }
 
-            if (!string.IsNullOrEmpty(searchTerm))
+            if (!string.IsNullOrEmpty(query.SearchTerm))
             {
                 chargersQuery = chargersQuery.Where(c =>
-                    c.Model.ToLower().Contains(searchTerm.ToLower()) ||
-                    c.Description.ToLower().Contains(searchTerm.ToLower()) ||
-                    c.Category.Name.ToLower().Contains(searchTerm.ToLower()));
+                    c.Model.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                    c.Description.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                    c.Category.Name.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
+            chargersQuery = query.Sorting switch
+            {
+                AllChargersSorting.Model => chargersQuery.OrderByDescending(c => c.Id),
+                _ => chargersQuery.OrderByDescending(c => c.Id)
+            };
+
+            var totalChargers = chargersQuery.Count();
+
             var chargers = chargersQuery
-                .OrderByDescending(c => c.Id)
+                .Skip((query.CurrentPage - 1) * AllChargersQueryModel.ChargersPerPage)
+                .Take(AllChargersQueryModel.ChargersPerPage)
                 .Select(c => new ChargerListingViewModel
                 {
                     Id = c.Id,
@@ -55,13 +58,18 @@
                 .Distinct()
                 .ToList();
 
-            return View(new AllChargersQueryModel
-            {
-                Categories = chargerCategories,
-                Chargers = chargers,
-                SearchTerm = searchTerm
-            });
+            query.TotalChargers = totalChargers;
+            query.Categories = chargerCategories;
+            query.Chargers = chargers;
+
+            return View(query);
         }
+
+        [HttpGet]
+        public IActionResult Add() => View(new AddChargerFormModel
+        {
+            Categories = this.GetCategories()
+        });
 
         [HttpPost]
         public IActionResult Add(AddChargerFormModel charger)
