@@ -22,11 +22,6 @@
         [Range(PriceMinValue, PriceMaxValue)]
         public decimal? PricePerHour { get; init; }
 
-        //[Required]
-        //[StringLength(UsernameMaxLength, MinimumLength = UsernameMinLength,
-        //    ErrorMessage = "The owner name must be between {2} and {1} symbols")]
-        //public string Owner { get; init; }
-
         [Display(Name = "Category")]
         public int? CategoryId { get; init; }
 

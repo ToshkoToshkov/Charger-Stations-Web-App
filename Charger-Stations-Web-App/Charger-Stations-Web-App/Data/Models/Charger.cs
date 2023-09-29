@@ -22,7 +22,6 @@
         [Range(PriceMinValue, PriceMaxValue)]
         public decimal? PricePerHour { get; set; }
 
-        //public string? Owner { get; set; }
         public string? LocationUrl { get; set; }
 
         public int? CategoryId { get; set; }
