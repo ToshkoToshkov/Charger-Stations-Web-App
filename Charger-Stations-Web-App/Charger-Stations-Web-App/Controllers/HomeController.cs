@@ -28,7 +28,7 @@
                     Model = c.Model,
                     ImageURL = c.ImageURL,
                     PricePerHour = c.PricePerHour,
-                    Owner = c.Owner,
+                    //Owner = c.Owner,
                     LocationUrl = c.LocationUrl,
                     Category = c.Category.Name
                 })

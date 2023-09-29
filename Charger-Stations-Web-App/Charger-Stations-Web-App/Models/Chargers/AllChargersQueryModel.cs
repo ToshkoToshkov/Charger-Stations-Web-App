@@ -9,7 +9,7 @@
 
         public IEnumerable<string> Models { get; init; }
 
-        [Display(Name = "Search")]
+        [Display(Name = "Search by text")]
         public string SearchTerm { get; init; }
 
         public AllChargersSorting Sorting { get; set; }

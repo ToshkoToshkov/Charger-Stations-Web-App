@@ -46,7 +46,7 @@
                     Model = c.Model,
                     ImageURL = c.ImageURL,
                     PricePerHour = c.PricePerHour,
-                    Owner = c.Owner,
+                    //Owner = c.Owner,
                     LocationUrl = c.LocationUrl,
                     Category = c.Category.Name
                 })
@@ -92,7 +92,7 @@
                 Description = charger.Description,
                 ImageURL = charger.ImageURL,
                 PricePerHour = charger.PricePerHour,
-                Owner = charger.Owner,
+                //Owner = charger.Owner,
                 LocationUrl = charger.LocationUrl,
                 CategoryId = charger.CategoryId
             };

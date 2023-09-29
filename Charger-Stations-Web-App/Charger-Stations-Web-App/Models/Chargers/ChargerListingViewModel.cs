@@ -1,9 +1,5 @@
 ﻿namespace Charger_Stations_Web_App.Models.Chargers
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.Reflection.Metadata;
-    using static Charger_Stations_Web_App.Data.DataConstants;
-
     public class ChargerListingViewModel
     {
         public int Id { get; init; }
