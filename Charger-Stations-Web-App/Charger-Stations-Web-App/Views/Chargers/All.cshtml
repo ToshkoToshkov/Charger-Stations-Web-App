@@ -1,7 +1,7 @@
 ﻿@model AllChargersQueryModel
 
 @{
-    ViewData["Title"] = "All Chargers";
+    ViewBag.Title = "All Chargers";
 }
 
 <form method="get">
@@ -71,6 +71,11 @@
            asp-route-sorting="@((int)Model.Sorting)">Next</a>
     </div>
 </div>
+
+@if (!Model.Chargers.Any())
+{
+    <h2 class="text-center">No chargers found by the given criteria!</h2>
+}
 
 <div class="row">
     @foreach (var charger in Model.Chargers)

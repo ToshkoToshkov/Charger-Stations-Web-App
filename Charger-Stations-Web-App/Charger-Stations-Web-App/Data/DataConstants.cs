@@ -20,8 +20,10 @@
 
         public class Dealer
         {
+            public const int NameMinLength = 3;
             public const int NameMaxLength = 30;
-            public const int PhoneNumberMaxLength = 20;
+            public const int PhoneNumberMinLength = 6;
+            public const int PhoneNumberMaxLength = 30;
         }
         
         public class Users

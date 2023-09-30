@@ -1,14 +1,14 @@
 ﻿@model AddChargerFormModel
 
 @{
-    ViewData["Title"] = "Add Charger";
+    ViewBag.Title = "Add Charger";
 }
 
 <div class="container">
     <div class="row">
         <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
 
-            <h2 class="heading-margin text-center">Add Charger</h2>
+            <h2 class="heading-margin text-center">@ViewBag.Title</h2>
 
             <form method="post">
                 <div class="form-group">
@@ -51,7 +51,7 @@
                     <span asp-validation-for="LocationUrl" class="small text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn btn-primary" value="Add Charger" id="submit">Add</button>
+                <button type="submit" class="btn btn-primary mt-3" value="Add Charger" id="submit">Add</button>
             </form>
         </div>
     </div>

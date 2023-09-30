@@ -1,9 +1,11 @@
 ﻿namespace Charger_Stations_Web_App.Controllers
 {
-    using Charger_Stations_Web_App.Data.Models;
     using Charger_Stations_Web_App.Data;
-    using Microsoft.AspNetCore.Mvc;
+    using Charger_Stations_Web_App.Data.Models;
     using Charger_Stations_Web_App.Models.Chargers;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using static Charger_Stations_Web_App.Infrastructure.ClaimsPrincipalExtensions;
 
     public class ChargersController : Controller
     {
@@ -65,14 +67,35 @@
         }
 
         [HttpGet]
-        public IActionResult Add() => View(new AddChargerFormModel
+        [Authorize]
+        public IActionResult Add()
         {
-            Categories = this.GetCategories()
-        });
+            if (!this.UserIsDealer())
+            {
+                return RedirectToAction(nameof(DealersController.Become), "Dealers");
+            }
+
+            return View(new AddChargerFormModel
+            {
+                Categories = this.GetCategories()
+            });
+        }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddChargerFormModel charger)
         {
+            var dealerId = this.data
+                .Dealers
+                .Where(d => d.UserId == this.User.GetId())
+                .Select(d => d.Id)
+                .FirstOrDefault();
+
+            if (dealerId == 0)
+            {
+                return RedirectToAction(nameof(DealersController.Become), "Dealers");
+            }
+
             if (!this.data.Categories.Any(c => c.Id == charger.CategoryId))
             {
                 this.ModelState.AddModelError(nameof(charger.CategoryId), "Category does not exist!");
@@ -91,9 +114,9 @@
                 Description = charger.Description,
                 ImageURL = charger.ImageURL,
                 PricePerHour = charger.PricePerHour,
-                //Owner = charger.Owner,
                 LocationUrl = charger.LocationUrl,
-                CategoryId = charger.CategoryId
+                CategoryId = charger.CategoryId,
+                DealerId = dealerId
             };
 
             this.data.Chargers.Add(chargerData);
@@ -101,6 +124,11 @@
 
             return RedirectToAction(nameof(All));
         }
+
+        private bool UserIsDealer()
+            => this.data
+            .Dealers
+            .Any(d => d.UserId == this.User.GetId());
 
         private IEnumerable<ChargerCategoryViewModel> GetCategories()
            => this.data

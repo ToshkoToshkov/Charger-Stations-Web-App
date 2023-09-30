@@ -39,3 +39,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+.heading-margin{
+    margin-top: 20px;
+    margin-bottom: 40px;
+}

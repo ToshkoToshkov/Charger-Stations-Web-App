@@ -1,9 +1,10 @@
 ﻿namespace Charger_Stations_Web_App.Models.Chargers
 {
+    using Charger_Stations_Web_App.Data.Models;
     using System.ComponentModel.DataAnnotations;
     public class AllChargersQueryModel
     {
-        public const int ChargersPerPage = 2; 
+        public const int ChargersPerPage = 3; 
 
         public string Model { get; init; }
 
@@ -23,6 +24,7 @@
         public string Category { get; set; }
 
         public IEnumerable<string> Categories { get; set; }
+
 
     }
 }
