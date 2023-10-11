@@ -47,12 +47,16 @@
 
 <div class="jumbotron">
     <div class="row">
-        <h2 class="col-md-6 text-center">
-            @Model.TotalChargers Chargers
-        </h2>
-
-        <h2 class="col-md-6 text-center">
-            @Model.TotalUsers Users
-        </h2>
+        <h2 class="col-md-6 text-center" id="total-chargers"></h2>
+        <h2 class="col-md-6 text-center" id="total-users"></h2>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $.get('/api/statistics', (data) => {
+            $('#total-chargers').text(data.totalChargers + " Chargers");
+            $('#total-users').text(data.totalUsers + " Users");
+        })
+    </script>
+}
