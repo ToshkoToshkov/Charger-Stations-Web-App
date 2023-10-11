@@ -1,8 +1,6 @@
-﻿namespace Charger_Stations_Web_App.Models.Chargers
+﻿namespace Charger_Stations_Web_App.Services.Chargers
 {
-    using Charger_Stations_Web_App.Data.Models;
-
-    public class ChargerListingViewModel
+    public class ChargerServiceModel
     {
         public int Id { get; init; }
 

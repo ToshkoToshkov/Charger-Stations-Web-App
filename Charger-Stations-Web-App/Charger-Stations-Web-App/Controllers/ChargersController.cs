@@ -2,66 +2,33 @@
 {
     using Charger_Stations_Web_App.Data;
     using Charger_Stations_Web_App.Data.Models;
+    using Charger_Stations_Web_App.Models;
     using Charger_Stations_Web_App.Models.Chargers;
+    using Charger_Stations_Web_App.Services.Chargers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using static Charger_Stations_Web_App.Infrastructure.ClaimsPrincipalExtensions;
 
     public class ChargersController : Controller
     {
+        private readonly IChargersService chargers;
         private readonly ChargerStationsDbContext data;
 
-        public ChargersController(ChargerStationsDbContext data)
-            => this.data = data;
+        public ChargersController(IChargersService chargers, ChargerStationsDbContext data)
+        {
+            this.chargers = chargers;
+            this.data = data;
+        }
 
         public IActionResult All([FromQuery]AllChargersQueryModel query)
         {
-            var chargersQuery = this.data.Chargers.AsQueryable();
+            var queryResult = this.chargers.All(query.Model, query.SearchTerm, query.Sorting, query.CurrentPage, AllChargersQueryModel.ChargersPerPage);
 
-            if (!string.IsNullOrEmpty(query.Category))
-            {
-                chargersQuery = chargersQuery.Where(c => c.Category.Name == query.Category);
-            }
+            var chargerCategories = this.chargers.AllChargerCategories();
 
-            if (!string.IsNullOrEmpty(query.SearchTerm))
-            {
-                chargersQuery = chargersQuery.Where(c =>
-                    c.Model.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                    c.Description.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                    c.Category.Name.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            chargersQuery = query.Sorting switch
-            {
-                AllChargersSorting.Model => chargersQuery.OrderByDescending(c => c.Id),
-                _ => chargersQuery.OrderByDescending(c => c.Id)
-            };
-
-            var totalChargers = chargersQuery.Count();
-
-            var chargers = chargersQuery
-                .Skip((query.CurrentPage - 1) * AllChargersQueryModel.ChargersPerPage)
-                .Take(AllChargersQueryModel.ChargersPerPage)
-                .Select(c => new ChargerListingViewModel
-                {
-                    Id = c.Id,
-                    Model = c.Model,
-                    ImageURL = c.ImageURL,
-                    PricePerHour = c.PricePerHour,
-                    LocationUrl = c.LocationUrl,
-                    Category = c.Category.Name
-                })
-                .ToList();
-
-            var chargerCategories = this.data
-                .Chargers
-                .Select(c => c.Category.Name)
-                .Distinct()
-                .ToList();
-
-            query.TotalChargers = totalChargers;
+            query.TotalChargers = queryResult.TotalChargers;
             query.Categories = chargerCategories;
-            query.Chargers = chargers;
+            query.Chargers = queryResult.Chargers;
 
             return View(query);
         }

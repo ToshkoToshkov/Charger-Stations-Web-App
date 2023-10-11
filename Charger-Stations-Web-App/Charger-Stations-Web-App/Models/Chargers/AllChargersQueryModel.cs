@@ -1,6 +1,7 @@
 ﻿namespace Charger_Stations_Web_App.Models.Chargers
 {
-    using Charger_Stations_Web_App.Data.Models;
+    using Charger_Stations_Web_App.Models;
+    using Charger_Stations_Web_App.Services.Chargers;
     using System.ComponentModel.DataAnnotations;
     public class AllChargersQueryModel
     {
@@ -19,7 +20,7 @@
 
         public int TotalChargers { get; set; }
 
-        public IEnumerable<ChargerListingViewModel> Chargers { get; set; }
+        public IEnumerable<ChargerServiceModel> Chargers { get; set; }
 
         public string Category { get; set; }
 

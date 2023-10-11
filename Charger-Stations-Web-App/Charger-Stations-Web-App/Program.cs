@@ -1,6 +1,8 @@
 using Charger_Stations_Web_App;
 using Charger_Stations_Web_App.Data;
 using Charger_Stations_Web_App.Infrastructure;
+using Charger_Stations_Web_App.Services.Chargers;
+using Charger_Stations_Web_App.Services.Statistics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +29,8 @@ builder.Services
     .AddEntityFrameworkStores<ChargerStationsDbContext>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+builder.Services.AddTransient<IChargersService, ChargersService>();
 
 var app = builder.Build();
 

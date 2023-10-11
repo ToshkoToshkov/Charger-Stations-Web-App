@@ -2,24 +2,25 @@
 {
     using Charger_Stations_Web_App.Data;
     using Charger_Stations_Web_App.Models;
-    using Charger_Stations_Web_App.Models.Chargers;
     using Charger_Stations_Web_App.Models.Home;
+    using Charger_Stations_Web_App.Services.Statistics;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
     using System.Linq;
 
     public class HomeController : Controller
     {
+        private readonly IStatisticsService statistics;
         private readonly ChargerStationsDbContext data;
 
-        public HomeController(ChargerStationsDbContext data)
-            => this.data = data;
+        public HomeController(IStatisticsService statistics, ChargerStationsDbContext data)
+        {
+            this.data = data;
+            this.statistics = statistics;
+        }
 
         public IActionResult Index() 
         {
-            var totalChargers = this.data.Chargers.Count();
-            var totalUsers = this.data.Users.Count();
-
             var chargers = this.data
                 .Chargers
                 .OrderByDescending(c => c.Id)
@@ -35,9 +36,12 @@
                 .Take(3)
                 .ToList();
 
+            var totalStatistics = this.statistics.Total();
+
             return View(new IndexViewModel
             {
-                TotalChargers = totalChargers,
+                TotalChargers = totalStatistics.TotalChargers,
+                TotalUsers = totalStatistics.TotalUsers,
                 Chargers = chargers
             });
         }

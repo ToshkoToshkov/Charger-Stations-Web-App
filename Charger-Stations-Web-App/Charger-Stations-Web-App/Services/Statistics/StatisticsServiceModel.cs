@@ -1,9 +1,10 @@
-﻿namespace Charger_Stations_Web_App.Models.Api.Statistics
+﻿namespace Charger_Stations_Web_App.Services.Statistics
 {
-    public class StatisticsResponseModel
+    public class StatisticsServiceModel
     {
         public int TotalChargers { get; init; }
 
         public int TotalUsers { get; init; }
+
     }
 }
