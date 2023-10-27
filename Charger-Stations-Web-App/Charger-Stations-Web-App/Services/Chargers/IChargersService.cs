@@ -11,8 +11,31 @@
             int currentPage,
             int chargersPerPage);
 
+        ChargerDetailsServiceModel Details(int id);
+
+        int Create(
+                string model,
+                string description,
+                string imageURL,
+                decimal? pricePerHour,
+                string locationUrl,
+                int? categoryId,
+                int dealerId);
+
+        bool Edit(
+                int id,
+                string model,
+                string description,
+                string imageURL,
+                decimal? pricePerHour,
+                string locationUrl,
+                int? categoryId,
+                int dealerId);
+
         IEnumerable<ChargerServiceModel> ByUser(string userId);
 
         IEnumerable<string> AllChargerCategories();
+
+        bool CategoryExist(int? categoryId);
     }
 }

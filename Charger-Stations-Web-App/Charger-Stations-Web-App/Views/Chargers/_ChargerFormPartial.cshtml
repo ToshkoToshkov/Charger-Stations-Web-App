@@ -1,0 +1,54 @@
+﻿@model ChargerFormModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+
+            <h2 class="heading-margin text-center">@ViewBag.Title</h2>
+
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Model"></label>
+                    <input asp-for="Model" class="form-control" placeholder="Write some model ...">
+                    <span asp-validation-for="Model" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Write some description..."></textarea>
+                    <span asp-validation-for="Description" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ImageURL"></label>
+                    <input asp-for="ImageURL" class="form-control" placeholder="Paste here link for image">
+                    <span asp-validation-for="ImageURL" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PricePerHour"></label>
+                    <input asp-for="PricePerHour" class="form-control" placeholder="Write here the price for 1 hour charging">
+                    <span asp-validation-for="PricePerHour" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CategoryId"></label>
+                    <select asp-for="CategoryId" class="form-control">
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LocationUrl"></label>
+                    <input asp-for="LocationUrl" class="form-control" placeholder="Paste here link for location">
+                    <span asp-validation-for="LocationUrl" class="small text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3" value="Add Charger" id="submit">Add</button>
+            </form>
+        </div>
+    </div>
+</div>

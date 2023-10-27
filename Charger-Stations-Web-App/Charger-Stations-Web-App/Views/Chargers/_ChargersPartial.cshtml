@@ -5,11 +5,16 @@
     {
         <div class="col-md-4">
             <div class="card mb-3">
-                <img class="card-img-top" src="@charger.ImageURL" alt="@charger.Owner @charger.Model - @charger.LocationUrl (@charger.Category)" />
+                <img class="card-img-top" src="@charger.ImageURL" alt="@charger.Model - @charger.LocationUrl (@charger.Category)" />
 
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@charger.Category @charger.Model (@charger.PricePerHour $)</h5>
-                    <a asp-controller="Chargers" asp-action="Details" asp-route-id="@charger.Id" class="btn btn-primary">View More</a>
+                    <a asp-controller="Chargers" asp-action="Details" asp-route-id="@charger.Id" class="btn btn-primary">View</a>
+                    @if (ViewBag.AllowChargerEdit == true)
+                    {
+                        <a asp-controller="Chargers" asp-action="Edit" asp-route-id="@charger.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Chargers" asp-action="Delete" asp-route-id="@charger.Id" class="btn btn-danger">Delete</a>
+                    }
                 </div>
             </div>
         </div>

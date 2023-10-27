@@ -10,8 +10,6 @@
 
         public decimal? PricePerHour { get; init; }
 
-        public string Owner { get; init; }
-
         public string LocationUrl { get; init; }
 
         public string Category { get; init; }

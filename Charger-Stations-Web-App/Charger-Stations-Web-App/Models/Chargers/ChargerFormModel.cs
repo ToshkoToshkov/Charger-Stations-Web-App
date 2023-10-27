@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using static Data.DataConstants.Charger;
-    public class AddChargerFormModel
+    public class ChargerFormModel
     {
         [Required]
         [StringLength(ModelMaxLength, MinimumLength = ModelMinLength,
