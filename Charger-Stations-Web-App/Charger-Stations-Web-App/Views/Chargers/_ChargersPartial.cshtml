@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ChargerServiceModel>
+
+<div class="row">
+    @foreach (var charger in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@charger.ImageURL" alt="@charger.Owner @charger.Model - @charger.LocationUrl (@charger.Category)" />
+
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@charger.Category @charger.Model (@charger.PricePerHour $)</h5>
+                    <a asp-controller="Chargers" asp-action="Details" asp-route-id="@charger.Id" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

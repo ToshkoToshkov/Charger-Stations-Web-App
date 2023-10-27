@@ -2,9 +2,11 @@ using Charger_Stations_Web_App;
 using Charger_Stations_Web_App.Data;
 using Charger_Stations_Web_App.Infrastructure;
 using Charger_Stations_Web_App.Services.Chargers;
+using Charger_Stations_Web_App.Services.Dealers;
 using Charger_Stations_Web_App.Services.Statistics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -28,9 +30,14 @@ builder.Services
     })
     .AddEntityFrameworkStores<ChargerStationsDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+});
+
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<IChargersService, ChargersService>();
+builder.Services.AddTransient<IDealerService, DealerService>();
 
 var app = builder.Build();
 

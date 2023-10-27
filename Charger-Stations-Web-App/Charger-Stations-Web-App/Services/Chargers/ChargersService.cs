@@ -1,6 +1,7 @@
 ﻿namespace Charger_Stations_Web_App.Services.Chargers
 {
     using Charger_Stations_Web_App.Data;
+    using Charger_Stations_Web_App.Data.Models;
     using Charger_Stations_Web_App.Models;
     using System.Collections.Generic;
 
@@ -30,19 +31,10 @@
             };
             var totalChargers = chargersQuery.Count();
 
-            var chargers = chargersQuery
+            var chargers = GetChargers(chargersQuery
                 .Skip((currentPage - 1) * chargersPerPage)
-                .Take(chargersPerPage)
-                .Select(c => new ChargerServiceModel
-                {
-                    Id = c.Id,
-                    Model = c.Model,
-                    ImageURL = c.ImageURL,
-                    PricePerHour = c.PricePerHour,
-                    LocationUrl = c.LocationUrl,
-                    Category = c.Category.Name
-                })
-                .ToList();
+                .Take(chargersPerPage));
+                
 
             return new ChargersQueryServiceModel
             {
@@ -59,5 +51,23 @@
                 .Select(c => c.Category.Name)
                 .Distinct()
                 .ToList();
+
+        public IEnumerable<ChargerServiceModel> ByUser(string userId)
+             => this.GetChargers(this.data
+                 .Chargers
+                 .Where(c => c.Dealer.UserId == userId));
+
+        private IEnumerable<ChargerServiceModel> GetChargers(IQueryable<Charger> chargerQuery)
+            => chargerQuery
+            .Select(c => new ChargerServiceModel
+            {
+                Id = c.Id,
+                Model = c.Model,
+                ImageURL = c.ImageURL,
+                PricePerHour = c.PricePerHour,
+                LocationUrl = c.LocationUrl,
+                Category = c.Category.Name
+            })
+            .ToList();
     }
 }

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ChargerServiceModel>
+
+@{
+    ViewBag.Title = "My Chargers";
+}
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You do not have any chargers yet!</h2>
+}
+
+<partial name="_ChargersPartial" model="@Model" />
+
+
+

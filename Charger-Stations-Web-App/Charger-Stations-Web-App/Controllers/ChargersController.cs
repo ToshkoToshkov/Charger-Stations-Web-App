@@ -2,7 +2,6 @@
 {
     using Charger_Stations_Web_App.Data;
     using Charger_Stations_Web_App.Data.Models;
-    using Charger_Stations_Web_App.Models;
     using Charger_Stations_Web_App.Models.Chargers;
     using Charger_Stations_Web_App.Services.Chargers;
     using Microsoft.AspNetCore.Authorization;
@@ -47,6 +46,14 @@
                 Categories = this.GetCategories()
             });
         }
+
+        [Authorize]
+        public IActionResult Mine()
+        {
+            var myChargers = this.chargers.ByUser(this.User.GetId());
+            return View(myChargers);
+        }
+
 
         [HttpPost]
         [Authorize]

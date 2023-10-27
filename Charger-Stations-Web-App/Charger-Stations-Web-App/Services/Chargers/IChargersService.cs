@@ -4,7 +4,14 @@
 
     public interface IChargersService
     {
-        ChargersQueryServiceModel All(string model, string searchTerm, AllChargersSorting sorting, int currentPage, int chargersPerPage);
+        ChargersQueryServiceModel All(
+            string model,
+            string searchTerm,
+            AllChargersSorting sorting,
+            int currentPage,
+            int chargersPerPage);
+
+        IEnumerable<ChargerServiceModel> ByUser(string userId);
 
         IEnumerable<string> AllChargerCategories();
     }
