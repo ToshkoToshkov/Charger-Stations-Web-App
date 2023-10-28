@@ -81,6 +81,21 @@
             return chargerData.Id;
         }
 
+        public bool Delete(int id)
+        {
+            var chargerData = this.data.Chargers.Find(id);
+
+            if (chargerData == null) 
+            {
+                return false;
+            }
+
+            this.data.Chargers.Remove(chargerData);
+            this.data.SaveChanges();
+
+            return true;
+        }
+
         public ChargerDetailsServiceModel Details(int id)
             => this.data
             .Chargers

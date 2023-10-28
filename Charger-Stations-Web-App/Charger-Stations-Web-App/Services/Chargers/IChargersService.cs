@@ -32,6 +32,8 @@
                 int? categoryId,
                 int dealerId);
 
+        bool Delete(int id);
+
         IEnumerable<ChargerServiceModel> ByUser(string userId);
 
         IEnumerable<string> AllChargerCategories();

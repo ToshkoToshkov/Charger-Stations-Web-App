@@ -162,6 +162,33 @@
             return RedirectToAction(nameof(All));
         }
 
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var userId = this.User.GetId();
+
+            if (!this.dealers.IsDealer(userId))
+            {
+                return RedirectToAction(nameof(DealersController.Become), "Dealers");
+            }
+
+            var charger = this.chargers.Details(id);
+
+            if (charger.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            var chargerIsDeleted = this.chargers.Delete(charger.Id);
+
+            if (!chargerIsDeleted)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction(nameof(Mine));
+        }
+
         private IEnumerable<ChargerCategoryViewModel> GetCategories()
            => this.data
             .Categories
