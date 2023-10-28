@@ -85,7 +85,6 @@
             return View(myChargers);
         }
 
-
         [HttpPost]
         [Authorize]
         public IActionResult Add(ChargerFormModel charger)
