@@ -28,6 +28,7 @@ builder.Services
         options.Password.RequireLowercase = false;
         options.Password.RequireUppercase = false;
     })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ChargerStationsDbContext>();
 
 builder.Services.AddControllersWithViews(options =>

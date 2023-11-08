@@ -26,14 +26,13 @@
             public const int PhoneNumberMaxLength = 30;
         }
         
-        public class Users
+        public class User
         {
-            public const int emailLoginMinLength = 6;
-            public const int emailLoginMaxLength = 346;
-            public const int passwordLoginMinLength = 5;
-            public const int passwordLoginMaxLength = 20;
-            public const int UsernameMinLength = 3;
-            public const int UsernameMaxLength = 30;
+            public const int FullNameMaxLength = 40;
+            public const int FullNameMinLength = 5;
+
+            public const int PasswordMaxLength = 100;
+            public const int PasswordMinLength = 6;
         }
     }
 }
