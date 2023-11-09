@@ -10,7 +10,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@charger.Category @charger.Model (@charger.PricePerHour $)</h5>
                     <a asp-controller="Chargers" asp-action="Details" asp-route-id="@charger.Id" class="btn btn-primary">View</a>
-                    @if (ViewBag.AllowChargerEdit == true)
+                    @if (ViewBag.AllowChargerEdit == true || User.IsAdmin())
                     {
                         <a asp-controller="Chargers" asp-action="Edit" asp-route-id="@charger.Id" class="btn btn-warning">Edit</a>
                         <a asp-controller="Chargers" asp-action="Delete" asp-route-id="@charger.Id" class="btn btn-danger">Delete</a>
