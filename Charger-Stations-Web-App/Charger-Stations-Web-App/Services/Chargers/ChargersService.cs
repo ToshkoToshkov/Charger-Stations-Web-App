@@ -3,6 +3,7 @@
     using Charger_Stations_Web_App.Data;
     using Charger_Stations_Web_App.Data.Models;
     using Charger_Stations_Web_App.Models;
+    using Charger_Stations_Web_App.Models.Home;
     using System.Collections.Generic;
 
     public class ChargersService : IChargersService
@@ -135,6 +136,22 @@
 
             return true;
         }
+
+        public IEnumerable<ChargerIndexViewModel> Latest()
+            => this.data
+                .Chargers
+                .OrderByDescending(c => c.Id)
+                .Select(c => new ChargerIndexViewModel
+                {
+                    Id = c.Id,
+                    Model = c.Model,
+                    ImageURL = c.ImageURL,
+                    PricePerHour = c.PricePerHour,
+                    LocationUrl = c.LocationUrl,
+                    Category = c.Category.Name
+                })
+                .Take(3)
+                .ToList();
 
         private IEnumerable<ChargerServiceModel> GetChargers(IQueryable<Charger> chargerQuery)
             => chargerQuery

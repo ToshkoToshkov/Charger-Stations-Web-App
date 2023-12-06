@@ -1,6 +1,7 @@
 ﻿namespace Charger_Stations_Web_App.Services.Chargers
 {
     using Charger_Stations_Web_App.Models;
+    using Charger_Stations_Web_App.Models.Home;
 
     public interface IChargersService
     {
@@ -10,6 +11,8 @@
             AllChargersSorting sorting,
             int currentPage,
             int chargersPerPage);
+
+        IEnumerable<ChargerIndexViewModel> Latest();
 
         ChargerDetailsServiceModel Details(int id);
 
